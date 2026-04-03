@@ -1,7 +1,12 @@
-# 📊 Análise de Qualidade de Dados – Churn Dataset
+# 📊 Análise de Qualidade de Dados — Churn Dataset
+
+## 📌 Sobre o Projeto
+
+Este projeto tem como foco a análise de qualidade de dados em um dataset de churn, com ênfase na identificação e interpretação de valores nulos (`NULL`) e seu impacto na confiabilidade das análises.
 
 ## 🎯 Objetivo
-Demonstrar a importância da análise de dados nulos (`null`) e como sua interpretação correta impacta diretamente a confiabilidade das análises no Power BI.
+
+Demonstrar como a análise correta de valores nulos pode influenciar diretamente a qualidade dos dados e, consequentemente, a tomada de decisão em um contexto de negócio.
 
 ---
 
@@ -9,64 +14,52 @@ Demonstrar a importância da análise de dados nulos (`null`) e como sua interpr
 
 Durante a análise dos dados, foi identificado que a coluna **TotalCharges** apresentava valores nulos.
 
-<img width="1474" height="436" alt="null-analysis png" src="https://github.com/user-attachments/assets/aa7c0e05-a87c-4e49-abbd-3e9a09109f82" />
+![Análise de valores nulos](https://github.com/user-attachments/assets/aa7c0e05-a87c-4e49-abbd-3e9a09109f82)
 
 ---
 
 ## 🔍 Análise Crítica
 
-Nem todo valor nulo representa erro.
+Nem todo valor nulo representa erro — a interpretação depende do contexto de negócio.
 
-### ✅ Quando o `null` é CORRETO
-- Clientes com `tenure = 0`
-- Indica que o cliente é novo
-- Ainda não houve cobrança acumulada
+### ✅ Quando o `NULL` é válido
 
-👉 Nesse caso, o `TotalCharges` nulo faz sentido do ponto de vista de negócio.
+* Clientes com `tenure = 0`
+* Indica que o cliente é novo
+* Ainda não houve cobrança acumulada
 
----
-
-### ⚠️ Quando o `null` é PROBLEMA
-- Clientes com `tenure > 0`
-- Indica falha no dado
-
-👉 Aqui o dado precisa ser tratado, pois impacta métricas como:
-- Receita total
-- Ticket médio
-- Análise de churn
+📌 Neste cenário, o valor nulo é coerente e não deve ser tratado como erro.
 
 ---
 
-## 🛠️ Solução Aplicada
+### ⚠️ Quando o `NULL` é problema
 
-Foi realizada uma abordagem baseada em contexto:
+* Clientes com `tenure > 0`
+* Indica inconsistência nos dados
 
-- Validação dos dados
-- Identificação de inconsistências
-- Tratamento condicional dos valores nulos
+📌 Neste caso, o valor nulo compromete métricas importantes, como:
 
-### Exemplo de regra aplicada:
-
-Se TotalCharges for null e tenure = 0 → manter como válido
-Se TotalCharges for null e tenure > 0 → tratar/reconstruir
+* Receita total
+* Ticket médio
+* Análise de churn
 
 ---
 
-## 🛠️ Estratégia de Tratamento de Dados
+## 🛠️ Estratégia de Tratamento
 
-O tratamento dos valores nulos na coluna **TotalCharges** foi realizado com base no contexto de negócio, evitando substituições genéricas.
+Foi aplicada uma abordagem baseada em contexto de negócio, evitando substituições genéricas e garantindo maior confiabilidade dos dados.
 
 ### 📌 Regras Aplicadas
 
-- Se `TotalCharges` for null e `tenure = 0`  
-  → Considerado **válido** (cliente novo, sem cobrança acumulada)
+* Se `TotalCharges` for NULL e `tenure = 0`
+  → Considerado **válido** (cliente novo)
 
-- Se `TotalCharges` for null e `tenure > 0`  
-  → Considerado **problema de qualidade de dados**, sendo necessário tratamento ou reconstrução
+* Se `TotalCharges` for NULL e `tenure > 0`
+  → Considerado **problema de qualidade de dados**, sendo necessário tratamento
 
 ---
 
-### 💻 Lógica Aplicada (DAX)
+## 💻 Lógica Aplicada (DAX)
 
 ```DAX
 TotalCharges_Ajustado = 
@@ -79,35 +72,40 @@ IF(
         'Tabela'[TotalCharges]
     )
 )
-
-💡 Insight Principal
-
-
-
 ```
+
 ---
 
 ## 📊 Impacto no Negócio
 
-Após o tratamento:
+Após o tratamento dos dados:
 
-- Dados mais confiáveis
-- KPIs corrigidos
-- Melhor tomada de decisão
+* Aumento da confiabilidade das informações
+* Correção de KPIs relacionados à receita
+* Melhoria na qualidade das análises de churn
+* Apoio mais consistente à tomada de decisão
+
+---
+
+## 📈 Insights
+
+* A presença de valores nulos nem sempre indica erro
+* A interpretação correta depende do contexto de negócio
+* A qualidade dos dados impacta diretamente a análise e os resultados
 
 ---
 
 ## 🚀 Tecnologias Utilizadas
 
-- Power BI
-- Power Query
-- DAX
+* Power BI
+* Power Query
+* DAX
 
 ---
 
 ## 💡 Insight Principal
 
-> Nem todo dado nulo é um erro.  
+> Nem todo dado nulo é um erro.
 > A interpretação correta depende do contexto de negócio.
 
 ---
@@ -115,5 +113,3 @@ Após o tratamento:
 ## 👨‍💻 Autor
 
 Daniel Caldeirão
-
-
